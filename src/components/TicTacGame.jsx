@@ -13,10 +13,12 @@ import Board from './TicTacBoard';
     //Determines who´s next
     const [xIsNext, setXIsNext] = useState(true);
 
+    const [stepNumber, setStepNumber] = useState(0);
 
     const handleClick = (i) => {
-      const localHistory = [...history];
-      const current = localHistory[localHistory.length - 1];
+      
+      const localHistory = history.slice(0, stepNumber + 1);
+      const current = localHistory[stepNumber];
       const localSquares = [...current.squares];
 
       //Si hay un ganador, o si ya hay una "X" o "O" en un casillero retorna sin modificar.
@@ -30,15 +32,19 @@ import Board from './TicTacBoard';
       setXIsNext(!xIsNext);
 
       setHistory([...localHistory, {squares: localSquares}]);
+
+      setStepNumber(localHistory.length)
     }
     //copia el array history
     const localHistory = [...history];
-    const current = localHistory[localHistory.length - 1];
+    const current = localHistory[stepNumber];
     const winner = calculateWinner(current.squares);
 
-    const jumpTo = () => {
-      console.log("HOLA");
+    const jumpTo = (step) => {
+      setStepNumber(step);
+      setXIsNext((step % 2) === 0);
     }
+
     let status;
 
     if (winner) {
@@ -54,11 +60,15 @@ import Board from './TicTacBoard';
       status = 'Next player: ' + (xIsNext ? 'X' : 'O');
     }
 
+    //Time travel
     const moves = localHistory.map((step, move) => {
       const desc = move ?
+        //Si hubo algún movmiento
         'Go to move #' + move :
+        //Si no hubo ningun movimiento
         'Go to game start';
       return (
+        //Genera un boton para volver en el tiempo al movimiento solicitado.
         <li key={move}>
           <button className="move-btn" onClick={() => jumpTo(move)}>{desc}</button>
         </li>
