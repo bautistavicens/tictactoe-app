@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/TicTacGame.css';
+import { calculateWinner } from '../helpers/calculateWinner';
 
 const Square = ({value, onClick}) => {
 
@@ -22,6 +23,11 @@ const Square = ({value, onClick}) => {
     const handleClick = (i) => {
       //copiamos el array
       const localSquares = [...squares];
+
+      //Si hay un ganador, o si ya hay una "X" o "O" en un casillero retorna sin modificar.
+      if(calculateWinner(localSquares) || localSquares[i]){
+        return;
+      }
       //otra forma
       //const localSquares = [squares.slice()];
       localSquares[i] = xIsNext ? 'X' : 'O';
@@ -37,8 +43,15 @@ const Square = ({value, onClick}) => {
         />);
     }
   
-   
-      const status = 'Next player: X';
+    //Informa a que jugador le toca en el proximo turno.
+    const winner = calculateWinner(squares);
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } 
+    else {
+      status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+    }
   
       return (
         <div>
