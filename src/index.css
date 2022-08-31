@@ -16,8 +16,26 @@ html{
   background-image: url("./assets/images/tic_tac_toe_pattern.webp");
   background-repeat: repeat;
 }
+
+.header {
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+}
+
 #root{
   height: 100%;
   width: 100%;
 
+}
+
+.footer{
+  text-align: center;
+  margin-top: 50px;
+}
+
+@media (min-width: 822px) {
+  .footer{
+    margin-top: 120px;
+  }
 }

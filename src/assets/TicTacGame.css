@@ -130,6 +130,7 @@ body {
   @media (min-width: 822px) {
     .game {
       flex-direction: row;
+      margin-top: 3%;
     }
 
     .game-info{
@@ -146,3 +147,9 @@ body {
       font-size: 28px;
     }
   }
+
+  @media (min-width: 1010px) {
+    .game{
+      margin-left: 105px;
+    }
+    }
